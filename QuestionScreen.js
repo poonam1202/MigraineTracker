@@ -7,8 +7,12 @@ import { posQuesAction, negQuesAction } from '../actions';
 
 class QuestionScreen extends React.Component {
   state = {
-    posQues: [],
-    negQues: [],
+    negQues1: null,
+    negQues2: null,
+    negQues3: null,
+    posQues1: null,
+    posQues2: null,
+    posQues3: null,
     status_yes1: false,
     status_yes2: false,
     status_yes3: false,
@@ -19,47 +23,46 @@ class QuestionScreen extends React.Component {
     ans2: 'no'
   }
   positiveAns = (ques) => {
-    const { ans1, status_yes1, status_yes2, status_yes3 } = this.state
+    const { ans1, status_no1, status_no2, status_no3 } = this.state
     switch (ques) {
       case 1:
-        this.setState({ status_yes1: true })
-        const Ques1 = { ques_no: 1, ans: ans1 }
-        console.log(Ques1)
+        const posQues1 = { ques_no: 1, ans: ans1 }
+        this.setState({ status_no1: true, posQues1 })
         break;
       case 2:
-        this.setState({ status_yes2: true })
-        const Ques2 = { ques_no: 2, ans: ans1 }
-        console.log(Ques2)
+        const posQues2 = { ques_no: 2, ans: ans1 }
+        this.setState({ status_no2: true, posQues2 })
         break;
       default:
-        this.setState({ status_yes3: true })
-        const Ques3 = { ques_no: 3, ans: ans1 }
-        console.log(Ques3)
+        const posQues3 = { ques_no: 3, ans: ans1 }
+        this.setState({ status_no3: true, posQues3 })
         break;
     }
   }
   negativeAns = (ques) => {
-    const { ans2, status_no1, status_no2, status_no3, posQues } = this.state
+    const { ans2, status_yes1, status_yes2, status_yes3 } = this.state
     switch (ques) {
       case 1:
-        this.setState({ status_no1: true })
         const negQues1 = { ques_no: 1, ans: ans2 }
-        console.log(negQues1)
+        this.setState({ status_yes1: true, negQues1 })
         break;
       case 2:
-        this.setState({ status_no2: true })
         const negQues2 = { ques_no: 2, ans: ans2 }
-        console.log(negQues2)
+        this.setState({ status_yes2: true, negQues2 })
         break;
       default:
-        this.setState({ status_no3: true })
         const negQues3 = { ques_no: 3, ans: ans2 }
-        console.log(negQues3)
+        this.setState({ status_yes3: true, negQues3 })
         break;
     }
   }
   questionSubmit = () => {
-
+    const { negQues1, negQues2, negQues3, posQues1, posQues2, posQues3 } = this.state
+    const negQues = [{ negQues1 }, { negQues2 }, { negQues3 }]
+    const posQues = [{ posQues1 }, { posQues2 }, { posQues3 }]
+    console.log(negQues, posQues)
+    this.props.getNegQuestions(negQues)
+    this.props.getPosQuestions(posQues)
   }
   render() {
     return (
